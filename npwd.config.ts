@@ -3,20 +3,22 @@ import { AppIcon } from './icon';
 
 const defaultLanguage = 'en';
 const localizedAppName = {
-  en: 'APP_NAME',
+  en: 'Racing',
+  sv: 'RacerBoi',
 };
 
 interface Settings {
   language: 'en';
 }
 
-export const path = '/npwd_app_template';
+export const path = '/racing';
+
 export default (settings: Settings) => ({
-  id: 'APP_NAME',
+  id: 'RACING',
   path,
   nameLocale: localizedAppName[settings?.language ?? defaultLanguage],
   color: '#fff',
-  backgroundColor: '#333',
+  backgroundColor: '#e65100',
   icon: AppIcon,
   app: App,
 });

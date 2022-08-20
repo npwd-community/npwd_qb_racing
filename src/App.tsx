@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
-import { NuiProvider, useNuiEvent } from 'react-fivem-hooks';
-import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
+import React from 'react';
+import { NuiProvider } from 'react-fivem-hooks';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { IPhoneSettings } from '@project-error/npwd-types';
 import { i18n } from 'i18next';
-import {
-  Theme,
-  StyledEngineProvider,
-  Paper,
-  Typography,
-  BottomNavigation,
-  BottomNavigationAction,
-} from '@mui/material';
+import { Theme, StyledEngineProvider, Paper } from '@mui/material';
 import ThemeSwitchProvider from './ThemeSwitchProvider';
-import { HomeRounded, InfoRounded } from '@mui/icons-material';
 import Header, { HEADER_HEIGHT } from './components/Header';
-import { path } from '../npwd.config';
+import Footer from './components/Footer';
+import { RecoilRoot } from 'recoil';
+import Routes from './Routes';
 
 const Container = styled(Paper)`
   flex: 1;
@@ -36,15 +30,6 @@ const Content = styled.div`
   overflow: auto;
 `;
 
-const LinkItem = styled(Link)`
-  font-family: sans-serif;
-  text-decoration: none;
-`;
-
-const Footer = styled.footer`
-  margin-top: auto;
-`;
-
 interface AppProps {
   theme: Theme;
   i18n: i18n;
@@ -52,68 +37,20 @@ interface AppProps {
 }
 
 const App = (props: AppProps) => {
-  const history = useHistory();
-  const [count, setCount] = useState(0);
-  const { data } = useNuiEvent<string>({ event: 'RANDOM' });
-
-  const { pathname } = useLocation();
-  const [page, setPage] = useState(pathname);
-
-  const handleChange = (_e: any, newPage: any) => {
-    setPage(newPage);
-  };
-
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeSwitchProvider mode={props.theme.palette.mode}>
-        <Container square elevation={0}>
-          <Header>Template app</Header>
-          <Content>
-            <button onClick={() => history.push('/')} style={{ alignSelf: 'flex-start' }}>
-              Back
-            </button>
-
-            <div>
-              <h1>Template app - Heading 1</h1>
-              <h2>Data from client: {data}</h2>
-              <h3>You are at {page}</h3>
-
-              <p>Language is: {props.settings.language.label}</p>
-
-              <div>
-                <button onClick={() => setCount((prev) => prev + 1)}>+</button>
-                <button>{count}</button>
-                <button onClick={() => setCount((prev) => prev - 1)}>-</button>
-              </div>
-            </div>
-
-            <Footer>
-              <LinkItem to="/">
-                <Typography>Home</Typography>
-              </LinkItem>
-            </Footer>
-          </Content>
-
-          <BottomNavigation value={page} onChange={handleChange} showLabels>
-            <BottomNavigationAction
-              label={'Home'}
-              value="/home"
-              component={NavLink}
-              icon={<HomeRounded />}
-              to={path}
-            />
-            <BottomNavigationAction
-              label={'About'}
-              value="/about"
-              color="secondary"
-              component={NavLink}
-              icon={<InfoRounded />}
-              to={path}
-            />
-          </BottomNavigation>
-        </Container>
-      </ThemeSwitchProvider>
-    </StyledEngineProvider>
+    <RecoilRoot>
+      <StyledEngineProvider injectFirst>
+        <ThemeSwitchProvider mode={'dark'}>
+          <Container square elevation={0}>
+            <Header>Racing</Header>
+            <Content>
+              <Routes />
+            </Content>
+            <Footer />
+          </Container>
+        </ThemeSwitchProvider>
+      </StyledEngineProvider>
+    </RecoilRoot>
   );
 };
 
