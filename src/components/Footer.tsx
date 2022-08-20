@@ -1,12 +1,4 @@
-import {
-  AddRounded,
-  DashboardCustomizeRounded,
-  DashboardRounded,
-  FlagCircleRounded,
-  Home,
-  HomeRounded,
-  InfoRounded,
-} from '@mui/icons-material';
+import { AddRounded, FlagCircleRounded } from '@mui/icons-material';
 import FormatListBulletedRoundedIcon from '@mui/icons-material/FormatListBulletedRounded';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import React, { useEffect, useState } from 'react';

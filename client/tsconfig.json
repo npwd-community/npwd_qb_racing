@@ -9,5 +9,6 @@
     "target": "es6",
     "allowJs": true,
     "lib": ["es2017"]
-  }
+  },
+  "include": ["../types", "."]
 }

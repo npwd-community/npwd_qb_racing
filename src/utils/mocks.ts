@@ -1,4 +1,5 @@
-import { Coord, Race, Racer, Track } from '../types/Racing';
+import { Coord, Race, Racer, Track } from '../../types/Racing';
+import { User } from '../../types/User';
 
 const Coords: Coord[] = [
   {
@@ -283,14 +284,45 @@ const Coords: Coord[] = [
   },
 ];
 
+export const MockerUser: User = {
+  id: 0,
+  cid: 0,
+  citizenid: '',
+  license: '',
+  name: '',
+  money: {
+    bank: 0,
+    cash: 0,
+    crypto: 0,
+  },
+  charInfo: {
+    cid: '',
+    firstname: '',
+    nationality: '',
+    account: '',
+    card: 0,
+    birthdate: '',
+    gender: 0,
+    lastname: '',
+    backstory: '',
+    phone: '',
+  },
+};
+
 export const MockedRacer1: Racer = {
   id: 'YKN65254',
   name: 'Kalle Kula',
+  Checkpoint: 1,
+  finished: false,
+  lap: 1,
 };
 
 const MockedRacer2: Racer = {
   id: 'YKN65252',
   name: 'Berra Kula',
+  Checkpoint: 1,
+  finished: false,
+  lap: 1,
 };
 
 export const MockedTracks: Track[] = [
@@ -330,7 +362,9 @@ export const MockedRaces: Race[] = [
     started: false,
     waiting: true,
     lastLeaderboard: {},
-    racers: [MockedRacer1],
+    racers: {
+      [MockedRacer1.id]: MockedRacer1,
+    },
   },
   {
     ...MockedTracks[1],
@@ -340,7 +374,9 @@ export const MockedRaces: Race[] = [
     started: true,
     waiting: false,
     lastLeaderboard: {},
-    racers: [MockedRacer2],
+    racers: {
+      [MockedRacer2.id]: MockedRacer2,
+    },
   },
   {
     ...MockedTracks[1],
@@ -350,7 +386,10 @@ export const MockedRaces: Race[] = [
     started: false,
     waiting: false,
     lastLeaderboard: {},
-    racers: [MockedRacer1, MockedRacer2],
+    racers: {
+      [MockedRacer1.id]: MockedRacer1,
+      [MockedRacer2.id]: MockedRacer2,
+    },
   },
   {
     ...MockedTracks[0],
@@ -360,6 +399,6 @@ export const MockedRaces: Race[] = [
     started: false,
     waiting: false,
     lastLeaderboard: {},
-    racers: [],
+    racers: {},
   },
 ];

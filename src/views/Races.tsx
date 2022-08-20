@@ -10,14 +10,13 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { path } from '../../npwd.config';
+import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import { racesAtom } from '../atoms/races';
 import RaceCard from '../components/RaceCard';
 
 const Races = () => {
   const races = useRecoilValue(racesAtom);
+  const refreshRaces = useRecoilRefresher_UNSTABLE(racesAtom);
   const isThereActiveRaces = races.length > 0;
 
   if (!isThereActiveRaces) {
@@ -47,7 +46,7 @@ const Races = () => {
 
       <Stack spacing={1}>
         {races.map((race) => (
-          <RaceCard key={race.id} race={race} />
+          <RaceCard key={race.id} race={race} onUpdate={refreshRaces} />
         ))}
       </Stack>
     </div>

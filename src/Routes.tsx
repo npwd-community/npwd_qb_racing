@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import { path } from '../npwd.config';
 import Races from './views/Races';
 import Tracks from './views/Tracks';

@@ -1,54 +1,51 @@
-import {
-  Add,
-  Delete,
-  Favorite,
-  FlagCircleRounded,
-  FlagRounded,
-  Leaderboard,
-  MoreVertRounded,
-  PeopleAlt,
-  PeopleAltRounded,
-  PeopleOutlineRounded,
-  PeopleRounded,
-  Warning,
-} from '@mui/icons-material';
+import { FlagRounded, PeopleAlt } from '@mui/icons-material';
 import {
   Avatar,
-  Badge,
   Button,
-  ButtonGroup,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardHeader,
   Chip,
   Divider,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-  MenuList,
   Stack,
-  Typography,
 } from '@mui/material';
-import { Box } from '@mui/system';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '../atoms/user';
-import { Race } from '../types/Racing';
+import { JoinRaceInput, LeaveRaceInput, Race } from '../../types/Racing';
+import fetchNui from '../utils/fetchNui';
+import { RacingEvents } from '../../types/Events';
 
 interface RaceCardProps {
   race: Race;
+  onUpdate(): void;
 }
 
-const RaceCard = ({ race }: RaceCardProps) => {
+const RaceCard = ({ race, onUpdate }: RaceCardProps) => {
   const user = useRecoilValue(userAtom);
+  const userId = user?.citizenid ?? '';
 
   const isSprint = race.laps === 0;
-  const isCreator = race.raceCreatorId === user.id;
-  const isCompeting = !!race.racers.find((racer) => racer.id === user.id);
+  const isCreator = race.raceCreatorId === userId;
+  const isCompeting = Boolean(race.racers[userId]);
+  const numberOfRacers = Object.keys(race.racers).length;
+
+  const handleLeave = async () => {
+    await fetchNui<boolean, LeaveRaceInput>(RacingEvents.LeaveRace, {
+      raceId: race.raceId,
+      raceName: race.name,
+    });
+    onUpdate();
+  };
+
+  const handleJoin = async () => {
+    await fetchNui<boolean, JoinRaceInput>(RacingEvents.JoinRace, {
+      raceId: race.raceId,
+      raceName: race.name,
+    });
+    onUpdate();
+  };
 
   return (
     <Card elevation={4}>
@@ -76,7 +73,7 @@ const RaceCard = ({ race }: RaceCardProps) => {
           <Chip
             variant="outlined"
             icon={<PeopleAlt fontSize="small" sx={{ paddingLeft: '0.35rem' }} />}
-            label={`${race.racers.length}/5`}
+            label={`${numberOfRacers}`}
           />
 
           <Chip
@@ -104,13 +101,17 @@ const RaceCard = ({ race }: RaceCardProps) => {
             {isCreator && <Button color="error">Delete</Button>}
 
             {isCompeting ? (
-              <Button color="error">Leave</Button>
+              <Button color="error" onClick={handleLeave}>
+                Leave
+              </Button>
             ) : (
-              <Button color="success">Join</Button>
+              <Button color="success" onClick={handleJoin}>
+                Join
+              </Button>
             )}
 
             {isCreator && (
-              <Button color="success" disabled={race.racers.length === 0}>
+              <Button color="success" disabled={numberOfRacers === 0}>
                 Start
               </Button>
             )}

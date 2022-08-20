@@ -621,6 +621,11 @@
   resolved "https://registry.yarnpkg.com/@project-error/npwd-types/-/npwd-types-1.3.4.tgz#1a3d2fcc64857968faa815b0af625c51c1fadb14"
   integrity sha512-av15qwRytjJ3b3pHbUZu5YTF2mYoz32OlfAxGBaF7orY8do65kWjQe+iq5Vnhy1+Vo6V1POY5XsE0o04BHJvog==
 
+"@project-error/pe-utils@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@project-error/pe-utils/-/pe-utils-0.3.0.tgz#cf73551c0e7d32be51cba5e7171d1fd438a29088"
+  integrity sha512-E1oYDEBA7A3t0+ZabUENY98YAqS9zPDELnBI2lWgX2udTYK9PBl0VxY9LhjlvfHH43FOREV1HrwDp5ry1DkE1w==
+
 "@types/body-parser@*":
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.2.tgz#aea2059e28b7658639081347ac4fab3de166e6f0"
@@ -3621,6 +3626,11 @@ punycode@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+
+qbcore.js@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/qbcore.js/-/qbcore.js-1.5.1.tgz#9048589982bbade0220e0f750a61901d475f4782"
+  integrity sha512-CrF1R5ylx3HE7ueGL2R+ZiZ5NoKHwziYyqD/p5X8fbpbUK/87Mt8chyCk7Bqm0xceENIWC8V7LW8nHLVeAgtXA==
 
 qs@6.9.7:
   version "6.9.7"

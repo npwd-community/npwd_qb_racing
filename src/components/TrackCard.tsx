@@ -1,29 +1,12 @@
-import {
-  Add,
-  Delete,
-  Favorite,
-  Flag,
-  FlagCircleRounded,
-  FlagRounded,
-  Leaderboard,
-  MoreVertRounded,
-  PeopleAlt,
-  PeopleAltRounded,
-  PeopleOutlineRounded,
-  PeopleRounded,
-  Warning,
-} from '@mui/icons-material';
+import { Delete, Flag, FlagRounded, Leaderboard, MoreVertRounded } from '@mui/icons-material';
 import {
   Avatar,
   Button,
   ButtonGroup,
   Card,
-  CardActionArea,
-  CardActions,
   CardContent,
   CardHeader,
   Chip,
-  Divider,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -31,7 +14,6 @@ import {
   MenuItem,
   MenuList,
   Stack,
-  Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useRef, useState } from 'react';
@@ -39,7 +21,7 @@ import { useHistory } from 'react-router';
 import { useRecoilValue } from 'recoil';
 import { path } from '../../npwd.config';
 import { userAtom } from '../atoms/user';
-import { Track } from '../types/Racing';
+import { Track } from '../../types/Racing';
 
 interface TrackCardProps {
   track: Track;
@@ -56,7 +38,7 @@ const TrackCard = ({ track, isEditable }: TrackCardProps) => {
     setIsExpanded((prev) => !prev);
   };
 
-  const isCreator = track.creatorId === user.id;
+  const isCreator = track.creatorId === user?.citizenid;
 
   return (
     <Card elevation={4}>
@@ -68,7 +50,7 @@ const TrackCard = ({ track, isEditable }: TrackCardProps) => {
             alt={track.creatorName}
             sx={{ backgroundColor: 'primary.main', color: 'primary.contrastText' }}
           >
-            {track.creatorName.substring(0, 1)}
+            {track?.creatorName?.substring(0, 1)}
           </Avatar>
         }
         action={
@@ -99,13 +81,11 @@ const TrackCard = ({ track, isEditable }: TrackCardProps) => {
               <ListItemText>Delete</ListItemText>
             </MenuItem>
           )}
-          <MenuItem>
+          <MenuItem onClick={() => history.push(`${path}/setupRace/${track.id}`)}>
             <ListItemIcon>
               <Flag />
             </ListItemIcon>
-            <ListItemText onClick={() => history.push(`${path}/setupRace/${track.id}`)}>
-              Start race from this track
-            </ListItemText>
+            <ListItemText>Start race from this track</ListItemText>
           </MenuItem>
         </MenuList>
       </Menu>
@@ -114,7 +94,7 @@ const TrackCard = ({ track, isEditable }: TrackCardProps) => {
         <Stack direction="row" spacing={1}>
           <Chip
             icon={<Leaderboard fontSize="small" sx={{ paddingLeft: '0.35rem' }} />}
-            label={`${Math.ceil(track.record.time / 100) / 10}s`}
+            label={`${Math.ceil((track.record?.time ?? 100) / 100) / 10}s`}
           />
 
           <Chip

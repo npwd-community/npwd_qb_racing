@@ -8,7 +8,9 @@
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
+  "include": ["types", "src"],
   "exclude": ["server", "client"]
 }

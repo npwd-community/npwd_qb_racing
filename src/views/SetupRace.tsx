@@ -12,15 +12,18 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FormEvent, useState } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import { path } from '../../npwd.config';
+import { RacingEvents } from '../../types/Events';
+import { CreateRaceInput, Track } from '../../types/Racing';
 import { tracksAtom } from '../atoms/tracks';
 import TrackCard from '../components/TrackCard';
-import { Track } from '../types/Racing';
+import fetchNui from '../utils/fetchNui';
 
 const SetupRace = () => {
   const tracks = useRecoilValue(tracksAtom);
-
+  const history = useHistory();
   const { trackId } = useParams<{ trackId: string }>();
   const initialTrack = tracks.find((track) => track.id === parseInt(trackId));
 
@@ -30,16 +33,18 @@ const SetupRace = () => {
   const isInvalidLapCount = isNaN(parseInt(laps, 10));
   const isDisabled = !selectedTrack || isInvalidLapCount;
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (isDisabled) {
       return;
     }
 
-    console.log('Setting up race with', {
-      selectedTrack,
-      numberOfLaps: laps,
+    await fetchNui<boolean, CreateRaceInput>(RacingEvents.SetupRace, {
+      trackId: selectedTrack.raceId,
+      laps: parseInt(laps, 10),
     });
+
+    history.push(path);
   };
 
   return (

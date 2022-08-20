@@ -1,32 +1,42 @@
-let isFocused = false;
-const exps = global.exports
+import { RegisterNuiCB } from '@project-error/pe-utils';
+import { QBRacingEvents, RacingEvents } from '../types/Events';
+import { CreateRaceInput, JoinRaceInput, LeaveRaceInput, Race, Track } from '../types/Racing';
+import { User } from '../types/User';
 
-RegisterCommand(
-  'focus',
-  () => {
-    if (isFocused) {
-      SetNuiFocus(false, false);
-      SetNuiFocusKeepInput(false);
-      isFocused = false;
-      return;
-    }
+RegisterNuiCB(RacingEvents.GetTracks, (_, cb) => {
+  emitNet(RacingEvents.GetTracks);
+  onNet(RacingEvents.SendTracks, (data: Track[]) => {
+    cb({ status: 'ok', data });
+  });
+});
 
-    //SendNUIMessage({ type: 'RANDOM', payload: 'Hello from client' });
-    global.exports["npwd"].sendUIMessage('RANDOM', 'Hello from client');
+RegisterNuiCB(RacingEvents.GetRaces, (_, cb) => {
+  emitNet(RacingEvents.GetRaces);
+  onNet(RacingEvents.SendRaces, (data: Race[]) => {
+    cb({ status: 'ok', data });
+  });
+});
 
-    SetNuiFocusKeepInput(true);
-    SetNuiFocus(true, true);
-    isFocused = true;
-  },
-  false
-);
+RegisterNuiCB(RacingEvents.GetUser, (_, cb) => {
+  emitNet(RacingEvents.GetUser);
+  onNet(RacingEvents.SendUser, (data: User) => {
+    cb({ status: 'ok', data });
+  });
+});
 
-RegisterCommand(
-  'unfocus',
-  () => {
-    SetNuiFocus(false, false);
-  },
-  false
-);
+RegisterNuiCB(RacingEvents.SetupRace, (data: CreateRaceInput, cb) => {
+  emitNet(QBRacingEvents.SetupRace, data.trackId, data.laps);
+  cb({ status: 'ok' });
+});
 
-RegisterKeyMapping('focus', 'Toggle Phone', 'keyboard', 'n');
+RegisterNuiCB(RacingEvents.JoinRace, (data: JoinRaceInput, cb) => {
+  emitNet(QBRacingEvents.JoinRace, { RaceData: { RaceName: data.raceName, RaceId: data.raceId } });
+  cb({ status: 'ok' });
+});
+
+RegisterNuiCB(RacingEvents.LeaveRace, (data: LeaveRaceInput, cb) => {
+  emitNet(QBRacingEvents.LeaveRace, { RaceName: data.raceName, RaceId: data.raceId });
+  cb({ status: 'ok' });
+});
+
+emitNet(RacingEvents.GetRaces);
