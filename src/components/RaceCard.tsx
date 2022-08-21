@@ -47,6 +47,11 @@ const RaceCard = ({ race, onUpdate }: RaceCardProps) => {
     onUpdate();
   };
 
+  const handleStart = async () => {
+    await fetchNui(RacingEvents.StartRace, race.raceId);
+    onUpdate();
+  };
+
   return (
     <Card elevation={4}>
       <CardHeader
@@ -111,7 +116,7 @@ const RaceCard = ({ race, onUpdate }: RaceCardProps) => {
             )}
 
             {isCreator && (
-              <Button color="success" disabled={numberOfRacers === 0}>
+              <Button color="success" disabled={numberOfRacers === 0} onClick={handleStart}>
                 Start
               </Button>
             )}

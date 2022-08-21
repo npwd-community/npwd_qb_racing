@@ -39,4 +39,12 @@ RegisterNuiCB(RacingEvents.LeaveRace, (data: LeaveRaceInput, cb) => {
   cb({ status: 'ok' });
 });
 
-emitNet(RacingEvents.GetRaces);
+RegisterNuiCB(RacingEvents.StartRace, (raceId: string, cb) => {
+  emitNet(QBRacingEvents.StartRace, raceId);
+  cb({ status: 'ok' });
+});
+
+RegisterNuiCB(RacingEvents.CreateTrack, (trackName: string, cb) => {
+  emitNet(QBRacingEvents.CreateTrack, trackName);
+  cb({ status: 'ok' });
+});
