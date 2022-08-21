@@ -14,6 +14,7 @@ export enum RacingEvents {
   JoinRace = 'npwd:qb-racing:joinRace',
   LeaveRace = 'npwd:qb-racing:leaveRace',
   StartRace = 'npwd:qb-racing:startRace',
+  StopRace = 'npwd:qb-racing:stopRace',
 }
 
 export enum QBRacingEvents {
@@ -22,4 +23,8 @@ export enum QBRacingEvents {
   CreateTrack = 'qb-lapraces:server:CreateLapRace',
   LeaveRace = 'qb-lapraces:server:LeaveRace',
   StartRace = 'qb-lapraces:server:StartRace',
+}
+
+export enum NUIEvents {
+  UpdateData = 'npwd:qb-racing:updateData',
 }

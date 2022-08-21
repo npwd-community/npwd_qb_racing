@@ -1,7 +1,9 @@
 import { RegisterNuiCB } from '@project-error/pe-utils';
-import { QBRacingEvents, RacingEvents } from '../types/Events';
+import { NUIEvents, QBRacingEvents, RacingEvents } from '../types/Events';
 import { CreateRaceInput, JoinRaceInput, LeaveRaceInput, Race, Track } from '../types/Racing';
 import { User } from '../types/User';
+
+const npwdExports = global.exports['npwd'];
 
 RegisterNuiCB(RacingEvents.GetTracks, (_, cb) => {
   emitNet(RacingEvents.GetTracks);
@@ -30,7 +32,7 @@ RegisterNuiCB(RacingEvents.SetupRace, (data: CreateRaceInput, cb) => {
 });
 
 RegisterNuiCB(RacingEvents.JoinRace, (data: JoinRaceInput, cb) => {
-  emitNet(QBRacingEvents.JoinRace, { RaceData: { RaceName: data.raceName, RaceId: data.raceId } });
+  emitNet(QBRacingEvents.JoinRace, { RaceName: data.raceName, RaceId: data.raceId });
   cb({ status: 'ok' });
 });
 
@@ -48,3 +50,12 @@ RegisterNuiCB(RacingEvents.CreateTrack, (trackName: string, cb) => {
   emitNet(QBRacingEvents.CreateTrack, trackName);
   cb({ status: 'ok' });
 });
+
+onNet('qb-phone:client:UpdateLapraces', () => {
+  npwdExports.sendUIMessage(NUIEvents.UpdateData);
+});
+
+// RegisterNuiCB(RacingEvents.StopRace, (trackName: string, cb) => {
+//   emitNet(QBRacingEvents.Stop, trackName);
+//   cb({ status: 'ok' });
+// });

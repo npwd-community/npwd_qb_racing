@@ -53,6 +53,10 @@ function parseRecord(record: SQLJSON | null): RaceRecord | null {
 
   const raceRecord = JSON.parse(record);
 
+  if (!raceRecord.Holder) {
+    return null;
+  }
+
   return {
     name: `${raceRecord.Holder[0]} ${raceRecord.Holder[1]}`,
     time: raceRecord.Time,

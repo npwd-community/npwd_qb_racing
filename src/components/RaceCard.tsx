@@ -52,6 +52,11 @@ const RaceCard = ({ race, onUpdate }: RaceCardProps) => {
     onUpdate();
   };
 
+  const handleStop = async () => {
+    await fetchNui(RacingEvents.StopRace, race.raceId);
+    onUpdate();
+  };
+
   return (
     <Card elevation={4}>
       <CardHeader
@@ -96,8 +101,17 @@ const RaceCard = ({ race, onUpdate }: RaceCardProps) => {
       {race.started ? (
         <CardActions disableSpacing>
           <Stack direction="row" spacing={1} marginLeft="auto">
-            {isCreator && <Button color="error">Stop</Button>}
-            {isCompeting && <Button color="error">Abort</Button>}
+            {isCreator && (
+              <Button color="error" onClick={handleStop}>
+                Stop
+              </Button>
+            )}
+
+            {isCompeting && (
+              <Button color="error" onClick={handleLeave}>
+                Abort
+              </Button>
+            )}
           </Stack>
         </CardActions>
       ) : (

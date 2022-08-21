@@ -1,5 +1,5 @@
 import React from 'react';
-import { NuiProvider } from 'react-fivem-hooks';
+import { NuiProvider, useNuiEvent } from 'react-fivem-hooks';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -11,6 +11,8 @@ import Header, { HEADER_HEIGHT } from './components/Header';
 import Footer from './components/Footer';
 import { RecoilRoot } from 'recoil';
 import Routes from './Routes';
+import { DataSync } from './components/DataSync';
+import { NUIEvents } from '../types/Events';
 
 const Container = styled(Paper)`
   flex: 1;
@@ -39,6 +41,7 @@ interface AppProps {
 const App = (props: AppProps) => {
   return (
     <RecoilRoot>
+      <DataSync />
       <StyledEngineProvider injectFirst>
         <ThemeSwitchProvider mode={'dark'}>
           <Container square elevation={0}>

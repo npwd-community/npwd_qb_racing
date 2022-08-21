@@ -38,7 +38,7 @@ const Races = () => {
   return (
     <div>
       <Typography variant="h6">Active races</Typography>
-      <Typography variant="caption">
+      <Typography variant="caption" sx={{ lineHeight: 1 }}>
         You can easily setup a track yourself from the navigation below.
       </Typography>
 
