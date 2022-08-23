@@ -1,11 +1,10 @@
 import React from 'react';
-import { NuiProvider, useNuiEvent } from 'react-fivem-hooks';
-import { Link } from 'react-router-dom';
+import { NuiProvider } from 'react-fivem-hooks';
 import styled from 'styled-components';
 
 import { IPhoneSettings } from '@project-error/npwd-types';
 import { i18n } from 'i18next';
-import { Theme, StyledEngineProvider, Paper } from '@mui/material';
+import { Theme, StyledEngineProvider, Paper, LinearProgress } from '@mui/material';
 import ThemeSwitchProvider from './ThemeSwitchProvider';
 import Header, { HEADER_HEIGHT } from './components/Header';
 import Footer from './components/Footer';
@@ -41,13 +40,32 @@ interface AppProps {
 const App = (props: AppProps) => {
   return (
     <RecoilRoot>
-      <DataSync />
       <StyledEngineProvider injectFirst>
         <ThemeSwitchProvider mode={'dark'}>
           <Container square elevation={0}>
+            <React.Suspense
+              fallback={
+                <LinearProgress
+                  color="primary"
+                  sx={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
+                />
+              }
+            >
+              <DataSync />
+            </React.Suspense>
+
             <Header>Racing</Header>
             <Content>
-              <Routes />
+              <React.Suspense
+                fallback={
+                  <LinearProgress
+                    color="primary"
+                    sx={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
+                  />
+                }
+              >
+                <Routes />
+              </React.Suspense>
             </Content>
             <Footer />
           </Container>

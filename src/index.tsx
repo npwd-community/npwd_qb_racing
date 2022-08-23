@@ -79,16 +79,18 @@ const Root = () => {
 
   return (
     <HashRouter>
-      <RecoilRoot>
-        <NuiProvider>
-          <Container>
-            <Background src={image} />
-            <AppContainer>
-              <App settings={settings} i18n={i18next} theme={theme} />
-            </AppContainer>
-          </Container>
-        </NuiProvider>
-      </RecoilRoot>
+      <React.Suspense fallback="Loading dev env">
+        <RecoilRoot>
+          <NuiProvider>
+            <Container>
+              <Background src={image} />
+              <AppContainer>
+                <App settings={settings} i18n={i18next} theme={theme} />
+              </AppContainer>
+            </Container>
+          </NuiProvider>
+        </RecoilRoot>
+      </React.Suspense>
     </HashRouter>
   );
 };
