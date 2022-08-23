@@ -1,7 +1,6 @@
 import { ServerPromiseResp } from '@project-error/npwd-types';
 import { atom, selector } from 'recoil';
 import { RacingEvents } from '../../types/Events';
-import { Racer } from '../../types/Racing';
 import { User } from '../../types/User';
 import fetchNui from '../utils/fetchNui';
 import { isEnvBrowser } from '../utils/misc';

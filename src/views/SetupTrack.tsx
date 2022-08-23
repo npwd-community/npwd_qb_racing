@@ -23,7 +23,7 @@ const SetupTrack = () => {
       <form onSubmit={handleCreateTrack}>
         <Stack spacing={1.5}>
           <TextField
-            label="Create track"
+            label="Track name"
             value={name}
             onChange={(event) => setName(event.target.value)}
           />

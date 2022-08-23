@@ -285,11 +285,11 @@ const Coords: Coord[] = [
 ];
 
 export const MockerUser: User = {
-  id: 0,
+  id: 'YKN65254',
   cid: 0,
-  citizenid: '',
+  citizenid: 'YKN65254',
   license: '',
-  name: '',
+  name: 'Kalle Kula',
   money: {
     bank: 0,
     cash: 0,
@@ -336,7 +336,7 @@ export const MockedTracks: Track[] = [
     raceId: 'LR-5565',
     record: {
       name: MockedRacer1.name,
-      time: 25202,
+      time: 8320,
     },
   },
   {

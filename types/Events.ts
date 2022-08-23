@@ -23,8 +23,11 @@ export enum QBRacingEvents {
   CreateTrack = 'qb-lapraces:server:CreateLapRace',
   LeaveRace = 'qb-lapraces:server:LeaveRace',
   StartRace = 'qb-lapraces:server:StartRace',
+  WaitingDistanceCheck = 'qb-lapraces:client:WaitingDistanceCheck',
+  GetRacingData = 'qb-lapraces:server:GetRacingData',
 }
 
 export enum NUIEvents {
   UpdateData = 'npwd:qb-racing:updateData',
+  GetDistanceToRace = 'npwd:qb-racing:getDistanceToRace',
 }

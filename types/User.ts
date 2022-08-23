@@ -17,7 +17,7 @@ export interface RawUser {
 }
 
 export interface User {
-  id: number;
+  id: string;
   cid: number;
   citizenid: string;
   license: string;

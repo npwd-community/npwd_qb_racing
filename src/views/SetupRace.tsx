@@ -1,4 +1,4 @@
-import { FlagRounded } from '@mui/icons-material';
+import { FlagRounded, RoomRounded } from '@mui/icons-material';
 import {
   Autocomplete,
   Box,
@@ -9,20 +9,21 @@ import {
   Paper,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import React, { FormEvent, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { path } from '../../npwd.config';
-import { RacingEvents } from '../../types/Events';
-import { CreateRaceInput, Track } from '../../types/Racing';
-import { tracksAtom } from '../atoms/tracks';
+import { NUIEvents, RacingEvents } from '../../types/Events';
+import { CreateRaceInput, GetDistanceToRaceInput, Track } from '../../types/Racing';
+import { sortedTracksAtom, tracksAtom } from '../atoms/tracks';
 import TrackCard from '../components/TrackCard';
 import fetchNui from '../utils/fetchNui';
 
 const SetupRace = () => {
-  const tracks = useRecoilValue(tracksAtom);
+  const tracks = useRecoilValue(sortedTracksAtom);
   const history = useHistory();
   const { trackId } = useParams<{ trackId: string }>();
   const initialTrack = tracks.find((track) => track.id === parseInt(trackId));
@@ -39,6 +40,12 @@ const SetupRace = () => {
       return;
     }
 
+    /* Notify of race position */
+    fetchNui<boolean, GetDistanceToRaceInput>(NUIEvents.GetDistanceToRace, {
+      raceId: selectedTrack.raceId,
+      joined: false,
+    });
+
     await fetchNui<boolean, CreateRaceInput>(RacingEvents.SetupRace, {
       trackId: selectedTrack.raceId,
       laps: parseInt(laps, 10),
@@ -51,7 +58,7 @@ const SetupRace = () => {
     <div>
       <Typography variant="h6">Setup a new race</Typography>
       <Typography variant="caption">
-        Once there's a race created it will show up here. Come back later!
+        If you create a race with 0 laps, it'll become a sprint instead.
       </Typography>
 
       <Divider light sx={{ margin: '1.5rem 0' }} />
@@ -86,6 +93,16 @@ const SetupRace = () => {
                   />
 
                   <Chip size="small" label={`${track.distance}m`} />
+
+                  {track.distanceToTrack && (
+                    <Tooltip title="Distance to the track">
+                      <Chip
+                        size="small"
+                        icon={<RoomRounded fontSize="small" sx={{ paddingLeft: '0.25rem' }} />}
+                        label={`${Math.floor(track.distanceToTrack)}m`}
+                      />
+                    </Tooltip>
+                  )}
                 </Stack>
               </Stack>
             </Box>

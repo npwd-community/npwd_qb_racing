@@ -48,9 +48,11 @@ export interface Track {
 
   creatorId: string;
   creatorName: string;
+
+  distanceToTrack?: number;
 }
 
-export interface RawRace {
+export interface QBRace {
   RaceId: string;
   SetupCitizenId: string;
   Laps: number;
@@ -94,4 +96,9 @@ export interface JoinRaceInput {
 export interface LeaveRaceInput {
   raceId: string;
   raceName: string;
+}
+
+export interface GetDistanceToRaceInput {
+  raceId: string;
+  joined: boolean;
 }

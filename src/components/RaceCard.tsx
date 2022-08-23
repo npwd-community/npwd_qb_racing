@@ -9,13 +9,14 @@ import {
   Chip,
   Divider,
   Stack,
+  Tooltip,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '../atoms/user';
-import { JoinRaceInput, LeaveRaceInput, Race } from '../../types/Racing';
+import { GetDistanceToRaceInput, JoinRaceInput, LeaveRaceInput, Race } from '../../types/Racing';
 import fetchNui from '../utils/fetchNui';
-import { RacingEvents } from '../../types/Events';
+import { NUIEvents, RacingEvents } from '../../types/Events';
 
 interface RaceCardProps {
   race: Race;
@@ -40,6 +41,16 @@ const RaceCard = ({ race, onUpdate }: RaceCardProps) => {
   };
 
   const handleJoin = async () => {
+    const isNearby = await fetchNui<boolean, GetDistanceToRaceInput>(NUIEvents.GetDistanceToRace, {
+      raceId: race.raceId,
+      joined: true,
+    });
+
+    if (!isNearby) {
+      // Notify failure to join
+      return;
+    }
+
     await fetchNui<boolean, JoinRaceInput>(RacingEvents.JoinRace, {
       raceId: race.raceId,
       raceName: race.name,
@@ -80,19 +91,23 @@ const RaceCard = ({ race, onUpdate }: RaceCardProps) => {
 
       <CardContent>
         <Stack direction="row" spacing={1}>
-          <Chip
-            variant="outlined"
-            icon={<PeopleAlt fontSize="small" sx={{ paddingLeft: '0.35rem' }} />}
-            label={`${numberOfRacers}`}
-          />
+          <Tooltip title="Competitors">
+            <Chip
+              icon={<PeopleAlt fontSize="small" sx={{ paddingLeft: '0.35rem' }} />}
+              label={`${numberOfRacers}`}
+            />
+          </Tooltip>
 
-          <Chip
-            variant="outlined"
-            label={`${isSprint ? 'Sprint' : race.laps}`}
-            icon={<FlagRounded fontSize="small" sx={{ paddingLeft: '0.25rem' }} />}
-          />
+          <Tooltip title={`${isSprint ? '0 laps (Sprint)' : 'Laps'}`}>
+            <Chip
+              label={`${isSprint ? 'Sprint' : race.laps}`}
+              icon={<FlagRounded fontSize="small" sx={{ paddingLeft: '0.25rem' }} />}
+            />
+          </Tooltip>
 
-          <Chip variant="outlined" label={`${race.distance}m`} />
+          <Tooltip title="Race distance">
+            <Chip label={`${race.distance}m`} />
+          </Tooltip>
         </Stack>
       </CardContent>
 

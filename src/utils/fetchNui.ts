@@ -1,4 +1,4 @@
-import { name } from '../../package.json';
+import Package from '../../package.json';
 
 /**
  * Simple wrapper around fetch API tailored for CEF/NUI use.
@@ -22,7 +22,7 @@ async function fetchNui<T = any, D = any>(eventName: string, data?: D, mockResp?
     return mockResp;
   }
 
-  const resp = await fetch(`https://${name}/${eventName}`, options);
+  const resp = await fetch(`https://${Package.name}/${eventName}`, options);
 
   const responseObj = await resp.json();
 

@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import { Add } from '@mui/icons-material';
 import { Divider, Fab, Stack, Typography } from '@mui/material';
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { path } from '../../npwd.config';
-import { tracksAtom } from '../atoms/tracks';
+import { sortedTracksAtom } from '../atoms/tracks';
 import TrackCard from '../components/TrackCard';
 
 const FabContainer = styled.div`
@@ -16,7 +16,7 @@ const FabContainer = styled.div`
 
 const Tracks = () => {
   const history = useHistory();
-  const tracks = useRecoilValue(tracksAtom);
+  const tracks = useRecoilValue(sortedTracksAtom);
 
   return (
     <div>
