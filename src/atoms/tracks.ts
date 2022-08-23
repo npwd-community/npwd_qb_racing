@@ -1,5 +1,5 @@
 import { ServerPromiseResp } from '@project-error/npwd-types';
-import { atom, selector } from 'recoil';
+import { atom, selector, useRecoilValue } from 'recoil';
 import { RacingEvents } from '../../types/Events';
 import { Track } from '../../types/Racing';
 import fetchNui from '../utils/fetchNui';
@@ -29,4 +29,18 @@ export const tracksAtom = atom<Track[]>({
       }
     },
   }),
+});
+
+export const sortedTracksAtom = selector<Track[]>({
+  key: 'npwd-qb-racing:sortedTracks',
+  get: async ({ get }) => {
+    const tracks = get(tracksAtom);
+
+    return [...tracks].sort((a, b) => {
+      if ((a.distanceToTrack ?? 0) > (b.distanceToTrack ?? 0)) {
+        return 1;
+      }
+      return -1;
+    });
+  },
 });
