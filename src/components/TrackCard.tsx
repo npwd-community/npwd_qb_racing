@@ -1,8 +1,12 @@
-import { Delete, Flag, FlagRounded, Leaderboard, MoreVertRounded } from '@mui/icons-material';
+import {
+  Delete,
+  Flag,
+  FlagRounded,
+  LeaderboardRounded,
+  MoreVertRounded,
+} from '@mui/icons-material';
 import {
   Avatar,
-  Button,
-  ButtonGroup,
   Card,
   CardContent,
   CardHeader,
@@ -14,6 +18,7 @@ import {
   MenuItem,
   MenuList,
   Stack,
+  Tooltip,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useRef, useState } from 'react';
@@ -22,6 +27,7 @@ import { useRecoilValue } from 'recoil';
 import { path } from '../../npwd.config';
 import { userAtom } from '../atoms/user';
 import { Track } from '../../types/Racing';
+import { formatTrackTime } from '../utils/racing';
 
 interface TrackCardProps {
   track: Track;
@@ -92,17 +98,23 @@ const TrackCard = ({ track, isEditable }: TrackCardProps) => {
 
       <CardContent>
         <Stack direction="row" spacing={1}>
-          <Chip
-            icon={<Leaderboard fontSize="small" sx={{ paddingLeft: '0.35rem' }} />}
-            label={`${Math.ceil((track.record?.time ?? 100) / 100) / 10}s`}
-          />
+          <Tooltip title="Track record">
+            <Chip
+              icon={<LeaderboardRounded fontSize="small" sx={{ paddingLeft: '0.35rem' }} />}
+              label={`${formatTrackTime(track.record?.time ?? 0)}`}
+            />
+          </Tooltip>
 
-          <Chip
-            label={`${track.checkpoints.length}`}
-            icon={<FlagRounded fontSize="small" sx={{ paddingLeft: '0.25rem' }} />}
-          />
+          <Tooltip title="Number of checkpoints">
+            <Chip
+              label={`${track.checkpoints.length}`}
+              icon={<FlagRounded fontSize="small" sx={{ paddingLeft: '0.25rem' }} />}
+            />
+          </Tooltip>
 
-          <Chip label={`${track.distance}m`} />
+          <Tooltip title="Track length">
+            <Chip label={`${track.distance}m`} />
+          </Tooltip>
         </Stack>
       </CardContent>
     </Card>
