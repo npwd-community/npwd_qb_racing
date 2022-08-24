@@ -28,7 +28,7 @@ const SetupTrack = () => {
             onChange={(event) => setName(event.target.value)}
           />
 
-          <Button>Start creating track</Button>
+          <Button type="submit">Start creating track</Button>
         </Stack>
       </form>
     </div>
