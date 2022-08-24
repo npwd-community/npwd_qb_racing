@@ -132,7 +132,11 @@ const RaceCard = ({ race, onUpdate }: RaceCardProps) => {
       ) : (
         <CardActions disableSpacing>
           <Stack direction="row" spacing={1} marginLeft="auto">
-            {isCreator && <Button color="error">Delete</Button>}
+            {isCreator && (
+              <Button color="error" onClick={handleStop}>
+                Delete
+              </Button>
+            )}
 
             {isCompeting ? (
               <Button color="error" onClick={handleLeave}>

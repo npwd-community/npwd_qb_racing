@@ -21,7 +21,7 @@ const Footer = () => {
     <BottomNavigation value={page} onChange={handleChange} showLabels>
       <BottomNavigationAction
         label={'Races'}
-        value="/"
+        value=""
         component={NavLink}
         icon={<FormatListBulletedRoundedIcon />}
         to={`${path}`}

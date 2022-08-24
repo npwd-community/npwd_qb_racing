@@ -142,7 +142,7 @@ function getDistance(v1: Vector, v2: Vector) {
   return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
 
-// RegisterNuiCB(RacingEvents.StopRace, (trackName: string, cb) => {
-//   emitNet(QBRacingEvents.Stop, trackName);
-//   cb({ status: 'ok' });
-// });
+RegisterNuiCB(RacingEvents.StopRace, (raceId: string, cb) => {
+  emitNet(QBRacingEvents.CancelRace, raceId);
+  cb({ status: 'ok' });
+});

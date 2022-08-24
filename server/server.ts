@@ -1,7 +1,7 @@
 import { RawUser, User } from '../types/User';
 import { Server } from 'qbcore.js';
 import { RawTrack, Track, RaceRecord, Race, QBRace } from '../types/Racing';
-import { RacingEvents } from '../types/Events';
+import { QBRacingEvents, RacingEvents } from '../types/Events';
 import { SQLJSON } from '../types/Common';
 console.log('Server started!');
 
@@ -56,6 +56,7 @@ onNet(RacingEvents.DeleteTrack, async (raceId: string) => {
   );
 
   if (affectedRows > 0) {
+    emit(QBRacingEvents.CancelRace, raceId);
     emitNet(RacingEvents.SendDeleteTrack, src, true);
     return;
   }

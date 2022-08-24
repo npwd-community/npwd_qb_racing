@@ -28,6 +28,8 @@ export enum QBRacingEvents {
   WaitingDistanceCheck = 'qb-lapraces:client:WaitingDistanceCheck',
   GetRacingData = 'qb-lapraces:server:GetRacingData',
   GetIsAuthorizedToCreateRaces = 'qb-lapraces:server:IsAuthorizedToCreateRaces',
+  UpdateRaceState = 'qb-lapraces:server:UpdateRaceState',
+  CancelRace = 'qb-lapraces:server:CancelRace',
 }
 
 export enum NUIEvents {
