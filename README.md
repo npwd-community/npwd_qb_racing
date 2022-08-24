@@ -11,9 +11,8 @@
 4. Add app to NPWD config.json in the `apps` section `"apps": ["npwd_qb_racing"]`
 
 ## Preview - Active races, Setup, Tracks
-
-![image](https://user-images.githubusercontent.com/32514829/186360936-23097422-37a5-43e3-9287-a0b969922680.png)
-![image](https://user-images.githubusercontent.com/32514829/186360898-c5a9fd1e-2e2c-411d-91a0-450d352cd5b4.png)
+![image](https://user-images.githubusercontent.com/32514829/186475340-27c744ce-ca92-4a80-aeb6-3e8c64ab3a48.png)
+![image](https://user-images.githubusercontent.com/32514829/186475320-78d66bf4-187f-42bd-9561-5d0098ee7430.png)
 ![image](https://user-images.githubusercontent.com/32514829/186360719-51fc06a8-5b3a-429d-a9a0-413d38baddd0.png)
 
 ### Light mode
