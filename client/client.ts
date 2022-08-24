@@ -60,6 +60,13 @@ RegisterNuiCB(RacingEvents.CreateTrack, (trackName: string, cb) => {
   cb({ status: 'ok' });
 });
 
+RegisterNuiCB(RacingEvents.DeleteTrack, (raceId: string, cb) => {
+  emitNet(RacingEvents.DeleteTrack, raceId);
+  onNet(RacingEvents.SendDeleteTrack, (isSuccess: boolean) => {
+    cb({ status: 'ok', data: isSuccess });
+  });
+});
+
 onNet('qb-phone:client:UpdateLapraces', () => {
   npwdExports.sendUIMessage(NUIEvents.UpdateData);
 });

@@ -28,13 +28,16 @@ import { path } from '../../npwd.config';
 import { userAtom } from '../atoms/user';
 import { Track } from '../../types/Racing';
 import { formatTrackTime } from '../utils/racing';
+import fetchNui from '../utils/fetchNui';
+import { RacingEvents } from '../../types/Events';
 
 interface TrackCardProps {
   track: Track;
+  onDelete?(): void;
   isEditable?: boolean;
 }
 
-const TrackCard = ({ track, isEditable }: TrackCardProps) => {
+const TrackCard = ({ track, isEditable, onDelete }: TrackCardProps) => {
   const history = useHistory();
   const user = useRecoilValue(userAtom);
   const menuRef = useRef(null);
@@ -42,6 +45,13 @@ const TrackCard = ({ track, isEditable }: TrackCardProps) => {
 
   const handleToggleExpanded = () => {
     setIsExpanded((prev) => !prev);
+  };
+
+  const handleDeleteTrack = async () => {
+    const isDeleted = await fetchNui(RacingEvents.DeleteTrack, track.raceId);
+    if (isDeleted && onDelete) {
+      onDelete();
+    }
   };
 
   const isCreator = track.creatorId === user?.citizenid;
@@ -80,7 +90,7 @@ const TrackCard = ({ track, isEditable }: TrackCardProps) => {
       >
         <MenuList dense disablePadding>
           {isCreator && (
-            <MenuItem>
+            <MenuItem onClick={handleDeleteTrack}>
               <ListItemIcon>
                 <Delete />
               </ListItemIcon>

@@ -9,6 +9,8 @@ export enum RacingEvents {
   SendUser = 'npwd:qb-racing:sendUser',
 
   CreateTrack = 'npwd:qb-racing:createTrack',
+  DeleteTrack = 'npwd:qb-racing:deleteTrack',
+  SendDeleteTrack = 'npwd:qb-racing:sendDeleteTrack',
   SetupRace = 'npwd:qb-racing:setupRace',
 
   JoinRace = 'npwd:qb-racing:joinRace',

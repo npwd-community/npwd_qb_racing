@@ -1,6 +1,6 @@
 import { RawUser, User } from '../types/User';
 import { Server } from 'qbcore.js';
-import { RawTrack, Track, RaceRecord, Race, RawRace } from '../types/Racing';
+import { RawTrack, Track, RaceRecord, Race, QBRace } from '../types/Racing';
 import { RacingEvents } from '../types/Events';
 import { SQLJSON } from '../types/Common';
 console.log('Server started!');
@@ -31,7 +31,7 @@ onNet(RacingEvents.GetRaces, async () => {
   const src = source;
 
   const rawUsers = await MYSQL.query_async<RawUser[]>('SELECT citizenid, charinfo from players');
-  const races = await new Promise<RawRace[]>((resolve) => {
+  const races = await new Promise<QBRace[]>((resolve) => {
     QBCore.Functions.TriggerCallback('qb-lapraces:server:GetRaces', 0, resolve);
   });
 
@@ -44,6 +44,23 @@ onNet(RacingEvents.GetUser, async () => {
   const src = source;
   const player = QBCore.Functions.GetPlayer(src);
   emitNet(RacingEvents.SendUser, src, player.PlayerData);
+});
+
+onNet(RacingEvents.DeleteTrack, async (raceId: string) => {
+  const src = source;
+  const player = QBCore.Functions.GetPlayer(src);
+
+  const { affectedRows } = await MYSQL.query_async<{ affectedRows: number }>(
+    'DELETE FROM lapraces WHERE creator=? AND raceid=?',
+    [player.PlayerData.citizenid, raceId],
+  );
+
+  if (affectedRows > 0) {
+    emitNet(RacingEvents.SendDeleteTrack, src, true);
+    return;
+  }
+
+  emitNet(RacingEvents.SendDeleteTrack, src, false);
 });
 
 function parseRecord(record: SQLJSON | null): RaceRecord | null {
@@ -83,7 +100,7 @@ function parseTrack(users: RawUser[]) {
 }
 
 function parseRace(users: RawUser[]) {
-  return (race: RawRace): Race => {
+  return (race: QBRace): Race => {
     const record = parseRecord(JSON.stringify(race.RaceData.Records) as SQLJSON);
     const creator = users.find((user) => user.citizenid === race.SetupCitizenId);
     const charInfo = creator && (JSON.parse(creator.charinfo) as User['charInfo']);

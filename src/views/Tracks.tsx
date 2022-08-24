@@ -3,7 +3,7 @@ import { Add } from '@mui/icons-material';
 import { Divider, Fab, Stack, Tooltip, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import { path } from '../../npwd.config';
 import { NUIEvents } from '../../types/Events';
 import { sortedTracksAtom } from '../atoms/tracks';
@@ -19,6 +19,7 @@ const FabContainer = styled.div`
 const Tracks = () => {
   const history = useHistory();
   const tracks = useRecoilValue(sortedTracksAtom);
+  const refreshTracks = useRecoilRefresher_UNSTABLE(sortedTracksAtom);
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const Tracks = () => {
 
       <Stack spacing={1}>
         {tracks.map((track) => (
-          <TrackCard key={track.id} track={track} isEditable />
+          <TrackCard key={track.id} track={track} isEditable onDelete={refreshTracks} />
         ))}
       </Stack>
 
