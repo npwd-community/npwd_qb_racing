@@ -91,6 +91,16 @@ RegisterNuiCB(NUIEvents.GetDistanceToRace, (data: GetDistanceToRaceInput, cb) =>
   );
 });
 
+RegisterNuiCB(NUIEvents.GetIsAuthorizedToCreateRaces, (trackName: string, cb) => {
+  QBCore.Functions.TriggerCallback(
+    QBRacingEvents.GetIsAuthorizedToCreateRaces,
+    (isAuthorized: boolean, isNameAvailable: boolean) => {
+      cb([isAuthorized, isNameAvailable]);
+    },
+    trackName,
+  );
+});
+
 function addDistanceToTrack(track: Track) {
   const ped = PlayerPedId();
   const coords = GetEntityCoords(ped, true);

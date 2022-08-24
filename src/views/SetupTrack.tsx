@@ -1,14 +1,33 @@
-import { Button, Divider, Stack, TextField, Typography } from '@mui/material';
+import { ErrorRounded } from '@mui/icons-material';
+import { Alert, Button, Divider, Stack, TextField, Typography } from '@mui/material';
 import React, { FormEvent, useState } from 'react';
-import { RacingEvents } from '../../types/Events';
+import { NUIEvents, RacingEvents } from '../../types/Events';
 import fetchNui from '../utils/fetchNui';
 
 const SetupTrack = () => {
-  const [name, setName] = useState('');
+  const [trackName, setTrackName] = useState('');
+  const [error, setError] = useState('');
 
-  const handleCreateTrack = (event: FormEvent) => {
+  const handleCreateTrack = async (event: FormEvent) => {
     event.preventDefault();
-    fetchNui(RacingEvents.CreateTrack, name);
+
+    setError('');
+    const [isAuthorized, isNameAvailable] = await fetchNui<[boolean, boolean], string>(
+      NUIEvents.GetIsAuthorizedToCreateRaces,
+      trackName,
+    );
+
+    if (!isNameAvailable) {
+      setError('Track name is not available.');
+      return;
+    }
+
+    if (!isAuthorized) {
+      setError('You are not authorized to create tracks.');
+      return;
+    }
+
+    fetchNui(RacingEvents.CreateTrack, trackName);
   };
 
   return (
@@ -24,11 +43,17 @@ const SetupTrack = () => {
         <Stack spacing={1.5}>
           <TextField
             label="Track name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
+            value={trackName}
+            onChange={(event) => setTrackName(event.target.value)}
           />
 
           <Button type="submit">Start creating track</Button>
+
+          {error && (
+            <Alert color="error" icon={ErrorRounded}>
+              {error}
+            </Alert>
+          )}
         </Stack>
       </form>
     </div>

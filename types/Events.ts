@@ -25,9 +25,11 @@ export enum QBRacingEvents {
   StartRace = 'qb-lapraces:server:StartRace',
   WaitingDistanceCheck = 'qb-lapraces:client:WaitingDistanceCheck',
   GetRacingData = 'qb-lapraces:server:GetRacingData',
+  GetIsAuthorizedToCreateRaces = 'qb-lapraces:server:IsAuthorizedToCreateRaces',
 }
 
 export enum NUIEvents {
   UpdateData = 'npwd:qb-racing:updateData',
   GetDistanceToRace = 'npwd:qb-racing:getDistanceToRace',
+  GetIsAuthorizedToCreateRaces = 'npwd:qb-racing:getIsAuthorizedToCreateRaces',
 }
