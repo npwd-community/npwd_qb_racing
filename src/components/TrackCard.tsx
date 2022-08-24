@@ -22,7 +22,7 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { path } from '../../npwd.config';
 import { userAtom } from '../atoms/user';
