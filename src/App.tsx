@@ -41,7 +41,7 @@ const App = (props: AppProps) => {
   return (
     <RecoilRoot>
       <StyledEngineProvider injectFirst>
-        <ThemeSwitchProvider mode={'dark'}>
+        <ThemeSwitchProvider mode={props.theme.palette.mode}>
           <Container square elevation={0}>
             <React.Suspense
               fallback={

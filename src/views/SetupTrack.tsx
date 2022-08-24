@@ -50,7 +50,7 @@ const SetupTrack = () => {
           <Button type="submit">Start creating track</Button>
 
           {error && (
-            <Alert color="error" icon={ErrorRounded}>
+            <Alert color="error" icon={<ErrorRounded />}>
               {error}
             </Alert>
           )}
