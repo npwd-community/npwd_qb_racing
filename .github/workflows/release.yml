@@ -38,12 +38,9 @@ jobs:
     
     - name: Bundle
       run: |
-        mkdir -p ./temp/${{env.APP_NAME}}
-        cp ./{README.md,fxmanifest.lua} ./temp/${{env.APP_NAME}}
-        cp -r ./client ./temp/${{env.APP_NAME}}
-        cp -r ./server ./temp/${{env.APP_NAME}}
-        cp -r ./web ./temp/${{env.APP_NAME}}
-        cd ./temp && zip -r ../${{env.APP_NAME}}.zip ./${{env.APP_NAME}}
+        chmod +x "./scripts/release.sh"
+        yarn release
+
     - name: Create Release
       uses: "marvinpinto/action-automatic-releases@v1.2.1"
       id: auto_release
