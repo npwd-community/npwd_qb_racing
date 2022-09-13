@@ -34,7 +34,10 @@
   },
   "scripts": {
     "start": "cross-env REACT_APP_IN_GAME=1 webpack-cli serve",
-    "build": "cross-env REACT_APP_IN_GAME=1 webpack --mode=production",
+    "build": "yarn build:server & yarn build:client & yarn build:web",
+    "build:web": "cross-env REACT_APP_IN_GAME=1 webpack --mode=production",
+    "build:server": "esbuild server/server.ts --bundle --sourcemap --platform=node --outfile=dist/server.js",
+    "build:client": "esbuild client/client.ts --bundle --outfile=dist/client.js",
     "dev": "cross-env REACT_APP_IN_GAME=0 webpack-dev-server --mode=development",
     "serve": "serve dist -p 3002",
     "clean": "rm -rf dist",
