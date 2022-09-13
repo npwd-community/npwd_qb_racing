@@ -41,6 +41,7 @@
     "dev": "cross-env REACT_APP_IN_GAME=0 webpack-dev-server --mode=development",
     "serve": "serve dist -p 3002",
     "clean": "rm -rf dist",
+    "release": "./scripts/release.sh",
     "watch": "concurrently \"yarn watch:client\" \"yarn watch:server\"  \"yarn watch:nui\"",
     "watch:nui": "esbuild src/index.tsx --outdir=dist/html --watch --target=es6 --bundle --loader:.png=dataurl",
     "watch:client": "esbuild client/client.ts --bundle --watch --outfile=dist/client.js",
