@@ -15,4 +15,4 @@ cp -r ./dist ./temp/$RESOURCE/dist # Copy files
 
 echo "$PREFIX Zipping it up: $RESOURCE.zip"
 
-cd temp && zip -r $RESOURCE.zip ./$RESOURCE
+cd ./temp && zip -r ../$RESOURCE.zip ./$RESOURCE
