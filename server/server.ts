@@ -3,7 +3,6 @@ import { Server } from 'qbcore.js';
 import { RawTrack, Track, RaceRecord, Race, QBRace } from '../types/Racing';
 import { QBRacingEvents, RacingEvents } from '../types/Events';
 import { SQLJSON } from '../types/Common';
-console.log('Server started!');
 
 const QBCore: Server = exports['qb-core'].GetCoreObject();
 
@@ -11,7 +10,10 @@ const hotReloadConfig = {
   resourceName: GetCurrentResourceName(),
   files: ['/dist/server.js', '/dist/client.js', '/dist/html/index.js'],
 };
-exports['hotreload'].add(hotReloadConfig);
+
+if (GetResourceState('hotreload') === 'started') {
+  exports['hotreload'].add(hotReloadConfig);
+}
 
 const MYSQL: OXMysqlExports = global.exports['oxmysql'];
 
