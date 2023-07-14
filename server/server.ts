@@ -57,6 +57,9 @@ onNet(RacingEvents.DeleteTrack, async (raceId: string) => {
     [player.PlayerData.citizenid, raceId],
   );
 
+  // This broadcasts the event so all clients update the UI after deleting a track
+  emitNet('qb-phone:client:UpdateLapraces', -1);
+
   if (affectedRows > 0) {
     emit(QBRacingEvents.CancelRace, raceId);
     emitNet(RacingEvents.SendDeleteTrack, src, true);
