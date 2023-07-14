@@ -8,11 +8,11 @@ import {
   Divider,
   Paper,
   Stack,
-  TextField,
   Tooltip,
   Typography,
   useTheme
 } from '@mui/material';
+import { TextField } from 'layout/ui';
 import React, { FormEvent, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -136,7 +136,7 @@ const SetupRace = () => {
             label="Select number of laps"
             type="number"
             value={laps}
-            onChange={(event) => setLaps(event.target.value)}
+            onChange={(event: any) => setLaps(event.target.value)}
             helperText="If lap count is 0, it will create a sprint."
           />
 
