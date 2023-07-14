@@ -9,6 +9,7 @@ const { dependencies, name } = packageJson;
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 const isDevelopment = process.env.NODE_ENV === 'development';
+const isIngame = process.env.REACT_APP_IN_GAME === '1';
 
 /* TODO: Fix for real */
 /* Probably bad way of fixing this */
@@ -62,6 +63,11 @@ module.exports = {
       filename: 'remoteEntry.js',
       exposes: {
         './config': './npwd.config',
+      },
+      remotes: {
+        layout: isIngame
+          ? 'layout@https://cfx-nui-npwd/resources/html/remoteEntry.js'
+          : 'layout@http://localhost:3000/remoteEntry.js',
       },
       shared: {
         ...dependencies,

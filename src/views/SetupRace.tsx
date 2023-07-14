@@ -8,23 +8,25 @@ import {
   Divider,
   Paper,
   Stack,
-  TextField,
   Tooltip,
   Typography,
+  useTheme
 } from '@mui/material';
+import { TextField } from 'layout/ui';
 import React, { FormEvent, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { path } from '../../npwd.config';
 import { NUIEvents, RacingEvents } from '../../types/Events';
 import { CreateRaceInput, GetDistanceToRaceInput, Track } from '../../types/Racing';
-import { sortedTracksAtom, tracksAtom } from '../atoms/tracks';
+import { sortedTracksAtom } from '../atoms/tracks';
 import TrackCard from '../components/TrackCard';
 import fetchNui from '../utils/fetchNui';
 
 const SetupRace = () => {
   const tracks = useRecoilValue(sortedTracksAtom);
   const history = useHistory();
+  const theme = useTheme();
   const { trackId } = useParams<{ trackId: string }>();
   const initialTrack = tracks.find((track) => track.id === parseInt(trackId));
 
@@ -134,11 +136,20 @@ const SetupRace = () => {
             label="Select number of laps"
             type="number"
             value={laps}
-            onChange={(event) => setLaps(event.target.value)}
+            onChange={(event: any) => setLaps(event.target.value)}
             helperText="If lap count is 0, it will create a sprint."
           />
 
-          <Button size="large" fullWidth type="submit" disabled={isDisabled} variant="contained">
+          <Button 
+            size="large" 
+            fullWidth 
+            type="submit" 
+            disabled={isDisabled} 
+            variant="contained"
+            sx={{
+              color: `${theme.palette.primary.contrastText} !important`,
+            }}
+          >
             Setup the race
           </Button>
         </Stack>

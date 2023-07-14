@@ -68,7 +68,7 @@ RegisterNuiCB(RacingEvents.DeleteTrack, (raceId: string, cb) => {
 });
 
 onNet('qb-phone:client:UpdateLapraces', () => {
-  npwdExports.sendUIMessage(NUIEvents.UpdateData);
+  npwdExports.sendUIMessage({type: NUIEvents.UpdateData});
 });
 
 RegisterNuiCB(NUIEvents.GetDistanceToRace, (data: GetDistanceToRaceInput, cb) => {

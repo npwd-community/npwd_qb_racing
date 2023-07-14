@@ -13,7 +13,7 @@ interface Settings {
 
 export const path = '/racing';
 
-export default (settings: Settings) => ({
+export const externalAppConfig = (settings: Settings) => ({
   id: 'RACING',
   path,
   nameLocale: localizedAppName[settings?.language ?? defaultLanguage],
@@ -23,3 +23,5 @@ export default (settings: Settings) => ({
   notificationIcon: NotificationIcon,
   app: App,
 });
+
+export default externalAppConfig;

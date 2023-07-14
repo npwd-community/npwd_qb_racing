@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Add } from '@mui/icons-material';
-import { Divider, Fab, Stack, Tooltip, Typography } from '@mui/material';
+import { Divider, Fab, Stack, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
@@ -21,6 +21,7 @@ const Tracks = () => {
   const tracks = useRecoilValue(sortedTracksAtom);
   const refreshTracks = useRecoilRefresher_UNSTABLE(sortedTracksAtom);
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const theme = useTheme();
 
   useEffect(() => {
     fetchNui<boolean[], string>(NUIEvents.GetIsAuthorizedToCreateRaces).then((res) => {
@@ -42,9 +43,15 @@ const Tracks = () => {
 
       <FabContainer>
         <Fab
-          color="success"
           onClick={() => history.push(path + '/setupTrack')}
           disabled={!isAuthorized}
+          sx={{
+            backgroundColor: `${theme.palette.primary.main} !important`,
+            color: `${theme.palette.primary.contrastText} !important`,
+            '&:hover': {
+              backgroundColor: `${theme.palette.primary.dark} !important`,
+            }
+          }}
         >
           <Add />
         </Fab>

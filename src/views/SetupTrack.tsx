@@ -1,5 +1,6 @@
 import { ErrorRounded } from '@mui/icons-material';
-import { Alert, Button, Divider, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Button, Divider, Stack, Typography } from '@mui/material';
+import { TextField } from 'layout/ui';
 import React, { FormEvent, useState } from 'react';
 import { NUIEvents, RacingEvents } from '../../types/Events';
 import fetchNui from '../utils/fetchNui';
@@ -44,7 +45,7 @@ const SetupTrack = () => {
           <TextField
             label="Track name"
             value={trackName}
-            onChange={(event) => setTrackName(event.target.value)}
+            onChange={(event: any) => setTrackName(event.target.value)}
           />
 
           <Button type="submit">Start creating track</Button>
